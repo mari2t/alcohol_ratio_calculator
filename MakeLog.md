@@ -8,3 +8,4 @@
 3. shadcn/uiインストール。npx shadcn@latest init
 4. 各コンポーネントを追加。例）npx shadcn@latest add input table card
 5. 機能としてはOK。UIは課題あり。
+6. 「摂取アルコール量 (g)」を追加（0.789はエタノール1mlあたりの質量[g]の目安）。

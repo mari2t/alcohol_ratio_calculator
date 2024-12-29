@@ -94,6 +94,20 @@ export default function RatioCalculator() {
     return (pureAlcohol / totalVolume) * 100;
   };
 
+  /**
+   * 摂取アルコール量（g）を計算
+   *  -> アルコール量 (ml) × (度数 / 100) × 0.789
+   */
+  const calculateAlcoholGrams = (
+    percentage: number,
+    alcoholMl: number
+  ): number => {
+    const fraction = percentage / 100;
+    // アルコール量(ml) × 度数(小数) = 純アルコール量(ml)
+    // 純アルコール1ml ≒ 0.789g
+    return alcoholMl * fraction * 0.789;
+  };
+
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
@@ -126,20 +140,29 @@ export default function RatioCalculator() {
                     <TableHead>アルコール (ml)</TableHead>
                     <TableHead>割材 (ml)</TableHead>
                     <TableHead>合計 (ml)</TableHead>
+                    <TableHead>摂取アルコール量 (g)</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {ratioPairs12.map(([alcoholMl, mixerMl], index) => (
-                    <TableRow
-                      key={index}
-                      // 偶数行・奇数行で色を変える (0始まりなので index % 2 === 0 が奇数行のイメージ)
-                      className={index % 2 === 0 ? "bg-gray-100" : ""}
-                    >
-                      <TableCell>{alcoholMl}</TableCell>
-                      <TableCell>{mixerMl}</TableCell>
-                      <TableCell>{alcoholMl + mixerMl}</TableCell>
-                    </TableRow>
-                  ))}
+                  {ratioPairs12.map(([alcoholMl, mixerMl], index) => {
+                    // 摂取アルコール量(g)を計算
+                    const grams = calculateAlcoholGrams(
+                      parseFloat(alcoholPercentage),
+                      alcoholMl
+                    );
+
+                    return (
+                      <TableRow
+                        key={index}
+                        className={index % 2 === 0 ? "bg-gray-100" : ""}
+                      >
+                        <TableCell>{alcoholMl}</TableCell>
+                        <TableCell>{mixerMl}</TableCell>
+                        <TableCell>{alcoholMl + mixerMl}</TableCell>
+                        <TableCell>{grams.toFixed(1)} g</TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </section>
@@ -154,19 +177,27 @@ export default function RatioCalculator() {
                     <TableHead>アルコール (ml)</TableHead>
                     <TableHead>割材 (ml)</TableHead>
                     <TableHead>合計 (ml)</TableHead>
+                    <TableHead>摂取アルコール量 (g)</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {ratioPairs13.map(([alcoholMl, mixerMl], index) => (
-                    <TableRow
-                      key={index}
-                      className={index % 2 === 0 ? "bg-gray-100" : ""}
-                    >
-                      <TableCell>{alcoholMl}</TableCell>
-                      <TableCell>{mixerMl}</TableCell>
-                      <TableCell>{alcoholMl + mixerMl}</TableCell>
-                    </TableRow>
-                  ))}
+                  {ratioPairs13.map(([alcoholMl, mixerMl], index) => {
+                    const grams = calculateAlcoholGrams(
+                      parseFloat(alcoholPercentage),
+                      alcoholMl
+                    );
+                    return (
+                      <TableRow
+                        key={index}
+                        className={index % 2 === 0 ? "bg-gray-100" : ""}
+                      >
+                        <TableCell>{alcoholMl}</TableCell>
+                        <TableCell>{mixerMl}</TableCell>
+                        <TableCell>{alcoholMl + mixerMl}</TableCell>
+                        <TableCell>{grams.toFixed(1)} g</TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </section>
@@ -181,19 +212,27 @@ export default function RatioCalculator() {
                     <TableHead>アルコール (ml)</TableHead>
                     <TableHead>割材 (ml)</TableHead>
                     <TableHead>合計 (ml)</TableHead>
+                    <TableHead>摂取アルコール量 (g)</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {ratioPairs14.map(([alcoholMl, mixerMl], index) => (
-                    <TableRow
-                      key={index}
-                      className={index % 2 === 0 ? "bg-gray-100" : ""}
-                    >
-                      <TableCell>{alcoholMl}</TableCell>
-                      <TableCell>{mixerMl}</TableCell>
-                      <TableCell>{alcoholMl + mixerMl}</TableCell>
-                    </TableRow>
-                  ))}
+                  {ratioPairs14.map(([alcoholMl, mixerMl], index) => {
+                    const grams = calculateAlcoholGrams(
+                      parseFloat(alcoholPercentage),
+                      alcoholMl
+                    );
+                    return (
+                      <TableRow
+                        key={index}
+                        className={index % 2 === 0 ? "bg-gray-100" : ""}
+                      >
+                        <TableCell>{alcoholMl}</TableCell>
+                        <TableCell>{mixerMl}</TableCell>
+                        <TableCell>{alcoholMl + mixerMl}</TableCell>
+                        <TableCell>{grams.toFixed(1)} g</TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </section>
@@ -208,19 +247,27 @@ export default function RatioCalculator() {
                     <TableHead>アルコール (ml)</TableHead>
                     <TableHead>割材 (ml)</TableHead>
                     <TableHead>合計 (ml)</TableHead>
+                    <TableHead>摂取アルコール量 (g)</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {ratioPairs15.map(([alcoholMl, mixerMl], index) => (
-                    <TableRow
-                      key={index}
-                      className={index % 2 === 0 ? "bg-gray-100" : ""}
-                    >
-                      <TableCell>{alcoholMl}</TableCell>
-                      <TableCell>{mixerMl}</TableCell>
-                      <TableCell>{alcoholMl + mixerMl}</TableCell>
-                    </TableRow>
-                  ))}
+                  {ratioPairs15.map(([alcoholMl, mixerMl], index) => {
+                    const grams = calculateAlcoholGrams(
+                      parseFloat(alcoholPercentage),
+                      alcoholMl
+                    );
+                    return (
+                      <TableRow
+                        key={index}
+                        className={index % 2 === 0 ? "bg-gray-100" : ""}
+                      >
+                        <TableCell>{alcoholMl}</TableCell>
+                        <TableCell>{mixerMl}</TableCell>
+                        <TableCell>{alcoholMl + mixerMl}</TableCell>
+                        <TableCell>{grams.toFixed(1)} g</TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </section>
