@@ -89,7 +89,7 @@ export default function RatioCalculator() {
 
         {showTable && (
           <div className="mt-8 space-y-10">
-            {ratioNumbers.map((ratio, index) => (
+            {ratioNumbers.map((ratio) => (
               <RatioTable
                 key={ratio}
                 alcoholPercentage={alcoholPercentage}
