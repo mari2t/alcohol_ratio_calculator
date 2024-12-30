@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,16 +13,24 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { RatioTable } from "./RatioTable";
 
 export default function RatioCalculator() {
   const [alcoholPercentage, setAlcoholPercentage] = useState<string>("");
   const [showTable, setShowTable] = useState<boolean>(false);
 
   // 1:2, 1:3, 1:4, 1:5 それぞれの混合後アルコール度数を保持するステート
+  const [mixedRatios, setMixedRatios] = useState<number[]>([]);
   const [mixedRatio12, setMixedRatio12] = useState<number>(0);
   const [mixedRatio13, setMixedRatio13] = useState<number>(0);
   const [mixedRatio14, setMixedRatio14] = useState<number>(0);
   const [mixedRatio15, setMixedRatio15] = useState<number>(0);
+
+  // アルコールの飲料の量ml
+  const alcoholAmount: number[] = [20, 40, 60, 80, 100];
+
+  // 割材の比率
+  const ratioNumbers: number[] = [2, 3, 4, 5];
 
   // 1:2 の (アルコール ml, 割材 ml) のペア
   const ratioPairs12: number[][] = [
@@ -65,15 +74,18 @@ export default function RatioCalculator() {
   const handleCalculate = () => {
     const percentage = parseFloat(alcoholPercentage);
     if (!isNaN(percentage)) {
-      // それぞれの比率で計算
-      setMixedRatio12(calculateMixedPercentage(percentage, 1, 2));
-      setMixedRatio13(calculateMixedPercentage(percentage, 1, 3));
-      setMixedRatio14(calculateMixedPercentage(percentage, 1, 4));
-      setMixedRatio15(calculateMixedPercentage(percentage, 1, 5));
+      // 配列をセット
+      setMixedRatios(calculateMixedPercentage(percentage, 1, ratioNumbers));
+
+      // 各比率の個別計算
+      setMixedRatio12(calculateMixedPercentage(percentage, 1, [2])[0]);
+      setMixedRatio13(calculateMixedPercentage(percentage, 1, [3])[0]);
+      setMixedRatio14(calculateMixedPercentage(percentage, 1, [4])[0]);
+      setMixedRatio15(calculateMixedPercentage(percentage, 1, [5])[0]);
 
       setShowTable(true);
     } else {
-      // 数値に変換できない場合は表示をリセット
+      setMixedRatios([]);
       setShowTable(false);
     }
   };
@@ -84,14 +96,23 @@ export default function RatioCalculator() {
   const calculateMixedPercentage = (
     percentage: number,
     a: number,
-    m: number
-  ): number => {
-    if (isNaN(percentage)) return 0;
+    ratioNumber: number[]
+  ): number[] => {
+    if (isNaN(percentage)) return [];
 
-    const inputFraction = percentage / 100; // 例: 40% → 0.4
+    const inputFraction = percentage / 100;
     const pureAlcohol = a * inputFraction;
-    const totalVolume = a + m;
-    return (pureAlcohol / totalVolume) * 100;
+
+    const results: number[] = [];
+    for (let i = 0; i < ratioNumber.length; i++) {
+      const ratio = ratioNumber[i];
+      const mixer = a * ratio;
+      const totalVolume = a + mixer;
+      const mixedPercentage = (pureAlcohol / totalVolume) * 100;
+      results.push(mixedPercentage);
+    }
+
+    return results; // 計算結果を返す
   };
 
   /**
@@ -131,6 +152,12 @@ export default function RatioCalculator() {
         {showTable && (
           <div className="mt-6 space-y-8">
             {/* --- 1:2 のテーブル --- */}
+            <RatioTable
+              alcoholPercentage={alcoholPercentage}
+              amount={alcoholAmount}
+              mixedRatio={2}
+              ratio={2}
+            />
             <section>
               <h2 className="text-lg font-semibold mb-2">1：2 の場合</h2>
               <p>割った後のアルコール度数：{mixedRatio12.toFixed(1)}%</p>
@@ -157,8 +184,8 @@ export default function RatioCalculator() {
                         className={index % 2 === 0 ? "bg-gray-100" : ""}
                       >
                         <TableCell>{alcoholMl}</TableCell>
-                        <TableCell>{mixerMl}</TableCell>
-                        <TableCell>{alcoholMl + mixerMl}</TableCell>
+                        <TableCell>{alcoholMl * 2}</TableCell>
+                        <TableCell>{alcoholMl + alcoholMl * 2}</TableCell>
                         <TableCell>{grams.toFixed(1)} g</TableCell>
                       </TableRow>
                     );
@@ -192,8 +219,8 @@ export default function RatioCalculator() {
                         className={index % 2 === 0 ? "bg-gray-100" : ""}
                       >
                         <TableCell>{alcoholMl}</TableCell>
-                        <TableCell>{mixerMl}</TableCell>
-                        <TableCell>{alcoholMl + mixerMl}</TableCell>
+                        <TableCell>{alcoholMl * 3}</TableCell>
+                        <TableCell>{alcoholMl + alcoholMl * 3}</TableCell>
                         <TableCell>{grams.toFixed(1)} g</TableCell>
                       </TableRow>
                     );
