@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import {
   Table,
   TableBody,
@@ -8,8 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { calcAlcoholGrams } from "@/lib/calcGrams";
-import React from "react";
 
 /**
  * Propsの型を定義
@@ -17,51 +18,69 @@ import React from "react";
 type RatioTableProps = {
   alcoholPercentage: string; // 入力されたアルコール度数(%)を文字列で受け取る
   amount: number[];
-  mixedRatio: number;
+  mixedRatios: number[];
   ratio: number;
 };
 
 export function RatioTable({
   alcoholPercentage,
   amount,
-  mixedRatio,
+  mixedRatios,
   ratio,
 }: RatioTableProps) {
-  return (
-    <section>
-      <h2 className="text-lg font-semibold mb-2">1：2 の場合</h2>
-      <p>割った後のアルコール度数：{mixedRatio.toFixed(1)}%</p>
-      <Table className="mt-4">
-        <TableHeader>
-          <TableRow>
-            <TableHead>アルコール (ml)</TableHead>
-            <TableHead>割材 (ml)</TableHead>
-            <TableHead>合計 (ml)</TableHead>
-            <TableHead>摂取アルコール量 (g)</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {amount.map((amount, index) => {
-            // 摂取アルコール量(g)を計算
-            const grams = calcAlcoholGrams(
-              parseFloat(alcoholPercentage),
-              amount
-            );
+  const mixedPercentage = parseFloat(mixedRatios[ratio - 2].toFixed(1));
 
-            return (
-              <TableRow
-                key={index}
-                className={index % 2 === 0 ? "bg-gray-100" : ""}
-              >
-                <TableCell>{amount}</TableCell>
-                <TableCell>{amount * ratio}</TableCell>
-                <TableCell>{amount + amount * ratio}</TableCell>
-                <TableCell>{grams.toFixed(1)} g</TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </section>
+  return (
+    <Card className="overflow-hidden">
+      <CardHeader className="bg-gradient-to-r from-blue-100 to-purple-100">
+        <CardTitle className="text-xl flex flex-col items-center">
+          <span className="text-center font-bold mb-2">
+            1：{ratio} で割る場合
+          </span>
+          <span className="text-base">
+            割った後のアルコール度数　{mixedPercentage}　%
+          </span>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="p-0">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-gray-50">
+              <TableHead className="font-semibold w-1/4">
+                アルコール飲料 (ml)
+              </TableHead>
+              <TableHead className="font-semibold w-1/4">割材 (ml)</TableHead>
+              <TableHead className="font-semibold w-1/4">合計 (ml)</TableHead>
+              <TableHead className="font-semibold w-1/4">
+                摂取アルコール量 (g)
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {amount.map((amount, index) => {
+              // 摂取アルコール量(g)を計算
+              const grams = calcAlcoholGrams(
+                parseFloat(alcoholPercentage),
+                amount
+              );
+
+              return (
+                <TableRow
+                  key={index}
+                  className={index % 2 === 0 ? "bg-gray-100" : "bg-gray-50"}
+                >
+                  <TableCell className="font-medium w-1/4">{amount}</TableCell>
+                  <TableCell className="w-1/4">{amount * ratio}</TableCell>
+                  <TableCell className="w-1/4">
+                    {amount + amount * ratio}
+                  </TableCell>
+                  <TableCell className="w-1/4">{grams.toFixed(1)} g</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
   );
 }

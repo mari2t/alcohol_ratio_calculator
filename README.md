@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# README
 
-## Getting Started
+## Overview
 
-First, run the development server:
+割った後のアルコール度数を計算するアプリです。  
+アルコール飲料のアルコール度数を入力して計算ボタンを押すと、  
+割材との比率（アルコール：割材＝1:2~1:5）に応じて下記が計算できます。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- 割った後のアルコール度数(%)
+- 割材の量(ml)
+- 割った後の総量(ml)
+- 摂取アルコール(g)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This app helps you calculate the alcohol concentration after mixing an alcoholic beverage with a diluting drink.  
+Simply input the alcohol percentage of your beverage and press the calculate button.  
+Based on the mixing ratio (e.g., 1:2 to 1:5), the app calculates the following:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Alcohol percentage (%) after dilution
+- Volume (ml) of the diluting drink
+- Total volume (ml)
+- Alcohol intake (g)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Example
 
-## Learn More
+### ![example.png](/public/image/example.png "example.png")
 
-To learn more about Next.js, take a look at the following resources:
+## Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js
+- shadcn/ui
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Creation Date
 
-## Deploy on Vercel
+2024/12/29-2024/12/31
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Log
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [作成ログ](./MakeLog.md)
+
+## Purpose of creation
+
+1. 肝臓を大事にするべくアルコール量に気を付けたい。
+2. 高アルコール飲料をどのくらいで割ればいいか検討したい。
+
+## Other
+
+純アルコール量計算式は厚生省のウェブサイトを参考に下記で計算しました。  
+摂取量(ml) × アルコール濃度（度数/100）× 0.8（アルコールの比重）
