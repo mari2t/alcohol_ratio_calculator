@@ -20,11 +20,17 @@ export default function RatioCalculator() {
   // 割材の比率
   const ratioNumbers: number[] = [2, 3, 4, 5];
 
+  const alertText = "アルコール度数は1～99％の範囲で入力してください。";
+
   /**
    * 計算ボタンを押したとき
    */
   const handleCalculate = () => {
     const percentage = parseFloat(inputValue);
+    if (percentage <= 0 || percentage >= 100) {
+      alert(alertText);
+      return;
+    }
     if (!isNaN(percentage)) {
       setAlcoholPercentage(inputValue);
       setMixedRatios(calculateMixedPercentage(percentage, ratioNumbers));
@@ -63,7 +69,7 @@ export default function RatioCalculator() {
           割った後のアルコール度数計算アプリ
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-6">
+      <CardContent className="p-4">
         <div className="flex items-center space-x-4 mb-6">
           <label htmlFor="alcohol-input" className="text-lg font-medium">
             アルコール飲料の度数
@@ -86,6 +92,12 @@ export default function RatioCalculator() {
             計算
           </Button>
         </div>
+        <label
+          htmlFor="alcohol-input"
+          className="text-sm font-medium text-gray-500"
+        >
+          {alertText}
+        </label>
 
         {showTable && (
           <div className="mt-8 space-y-10">

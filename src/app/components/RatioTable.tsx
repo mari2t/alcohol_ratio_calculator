@@ -28,7 +28,7 @@ export function RatioTable({
   mixedRatios,
   ratio,
 }: RatioTableProps) {
-  const mixedPercentage = parseFloat(mixedRatios[ratio - 2].toFixed(1));
+  const mixedPercentage = parseFloat(mixedRatios[ratio - 2].toFixed(0));
 
   return (
     <Card className="overflow-hidden">
@@ -74,7 +74,7 @@ export function RatioTable({
                   <TableCell className="w-1/4">
                     {amount + amount * ratio}
                   </TableCell>
-                  <TableCell className="w-1/4">{grams.toFixed(1)} g</TableCell>
+                  <TableCell className="w-1/4">{grams.toFixed(0)} g</TableCell>
                 </TableRow>
               );
             })}
