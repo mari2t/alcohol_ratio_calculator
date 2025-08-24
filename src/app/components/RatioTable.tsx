@@ -74,7 +74,7 @@ export function RatioTable({
                   <TableCell className="w-1/4">
                     {amount + amount * ratio}
                   </TableCell>
-                  <TableCell className="w-1/4">{grams.toFixed(0)} g</TableCell>
+                  <TableCell className="w-1/4">{grams.toFixed(1)} g</TableCell>
                 </TableRow>
               );
             })}
