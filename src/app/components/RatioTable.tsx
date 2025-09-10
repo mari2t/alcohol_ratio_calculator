@@ -28,7 +28,7 @@ export function RatioTable({
   mixedRatios,
   ratio,
 }: RatioTableProps) {
-  const mixedPercentage = parseFloat(mixedRatios[ratio - 2].toFixed(0));
+  const mixedPercentage = parseFloat(mixedRatios[ratio - 2].toFixed(1));
 
   return (
     <Card className="overflow-hidden">

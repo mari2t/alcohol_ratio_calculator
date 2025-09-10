@@ -18,7 +18,7 @@ export default function RatioCalculator() {
   const alcoholAmount: number[] = [20, 40, 60, 80, 100];
 
   // 割材の比率
-  const ratioNumbers: number[] = [2, 3, 4, 5, 6];
+  const ratioNumbers: number[] = [2, 3, 4, 5, 6, 7];
 
   const alertText = "アルコール度数は1～99％の範囲で入力してください。";
 
